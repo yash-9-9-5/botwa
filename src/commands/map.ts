@@ -21,7 +21,7 @@ export interface Command {
   usage?: string;
   example?: string;
   run?: (ctx: CommandContext) => Promise<void> | void;
-  midwere?: (ctx: CommandContext) => Promise<void> | void;
+  middleware?: (ctx: CommandContext) => Promise<void> | void;
 }
 
 class CmdMap {

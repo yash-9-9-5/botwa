@@ -21,8 +21,8 @@ class CommandHandler {
       isCmd: this.isCommand(messageText),
     };
     for (const command of cmd.values()) {
-      if (command.midwere) {
-        await Promise.resolve(command.midwere(context));
+      if (command.middleware) {
+        await Promise.resolve(command.middleware(context));
       }
     }
     if (!this.isCommand(messageText)) return;

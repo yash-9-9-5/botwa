@@ -129,13 +129,13 @@ The bot also supports middleware functionality that allows you to execute code f
 To use middleware functionality:
 
 1. Create a new file in the `src/plugins/` directory (e.g., `auto-reply.ts`)
-2. Use the `midwere` property instead of the `run` property:
+2. Use the `middleware` property instead of the `run` property:
 
    ```typescript
    import cmd, { type CommandContext } from "../commands/map";
 
    cmd.add({
-     midwere: async ({ m, sock }: CommandContext) => {
+     middleware: async ({ m, sock }: CommandContext) => {
        // This function runs for every received message
        const messageText = m.body.toLowerCase();
        
@@ -151,7 +151,7 @@ To use middleware functionality:
    ```
 
 3. The middleware function will execute for every incoming message, whether it's a command or not
-4. Unlike the `run` property which only executes when the command is specifically called, `midwere` runs on every message
+4. Unlike the `run` property which only executes when the command is specifically called, `middleware` runs on every message
 5. Remember that middleware runs frequently, so optimize your code for performance
 
 ## 🔒 Permissions System
