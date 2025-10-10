@@ -48,7 +48,7 @@ cmd.add({
   usage: ".eval [code]",
   example: ".eval 2 + 2",
   isOwner: true,
-  async run({ m, sock, store, args }: CommandContext) {
+  async run({ m, args }: CommandContext) {
     const text = args.join(" ");
     if (!text) return m.reply("Mana code nya woi");
     let result = "";

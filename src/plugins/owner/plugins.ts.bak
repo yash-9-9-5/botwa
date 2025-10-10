@@ -3,6 +3,7 @@ import { join, resolve, dirname } from "path";
 import { readFile, writeFile, readdir, unlink } from "fs/promises";
 import { existsSync } from "fs";
 import { spawn } from "child_process";
+import CmdRegis from "../../commands/register.js";
 
 const PLUGINS_DIR = resolve("./src/plugins/");
 const DIST_DIR = resolve("./dist/plugins/");
@@ -191,6 +192,7 @@ async function compilePluginFile(fileName: string): Promise<void> {
   }
   
   const tsFilePath = join(PLUGINS_DIR, fileName);
+  const jsFilePath = join(DIST_DIR, fileName.replace('.ts', '.js'));
   
   if (!existsSync(tsFilePath)) {
     throw new Error(`TypeScript file ${fileName} does not exist!`);

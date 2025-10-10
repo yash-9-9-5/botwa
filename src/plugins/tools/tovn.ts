@@ -31,7 +31,6 @@ cmd.add({
       );
       const tempInput = join(tmpdir(), randomBytes(6).toString("hex") + getExtension(mime));
       const tempOutput = join(tmpdir(), randomBytes(6).toString("hex") + ".ogg");
-      const tempRaw = join(tmpdir(), randomBytes(6).toString("hex") + ".raw");
 
       await writeFile(tempInput, buffer);
       await convertToOpus(tempInput, tempOutput);

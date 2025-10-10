@@ -18,6 +18,7 @@ class CmdRegis {
     for (const file of files) {
       const fullPath = join(dir, file.name);
       if (file.isDirectory()) {
+
         await this.scann(fullPath, result);
       } else if (
         file.isFile() &&
@@ -30,10 +31,22 @@ class CmdRegis {
   }
 
   public async load(): Promise<void> {
+    if (!fs.existsSync(this.directory)) {
+      console.log(`Command directory does not exist: ${this.directory}`);
+      console.log(`Creating directory: ${this.directory}`);
+      fs.mkdirSync(this.directory, { recursive: true });
+    }
+    
     cmd.reset();
     const files: string[] = await this.scann();
+    
     for (let file of files) {
       try {
+        if (!fs.existsSync(file)) {
+          console.error(`Command file does not exist: ${file}`);
+          continue;
+        }
+        
         const timestamp = Date.now();
         await import(`${file}?t=${timestamp}`);
       } catch (e: unknown) {
@@ -47,6 +60,12 @@ class CmdRegis {
   }
 
   public async watch(): Promise<void> {
+    if (!fs.existsSync(this.directory)) {
+      console.log(`Command directory does not exist: ${this.directory}`);
+      console.log(`Creating directory: ${this.directory}`);
+      fs.mkdirSync(this.directory, { recursive: true });
+    }
+
     console.log(`Watching command directory: ${this.directory}`);
 
     chokidar
@@ -64,6 +83,9 @@ class CmdRegis {
       .on("unlink", async (path) => {
         console.log(`\x1b[33m[WATCH]\x1b[0m Command file deleted: ${path}`);
         await this.reloadCommands();
+      })
+      .on("error", (error) => {
+        console.error(`\x1b[31m[ERROR]\x1b[0m Error watching directory:`, error);
       });
   }
 
@@ -77,4 +99,4 @@ class CmdRegis {
   }
 }
 
-export default new CmdRegis("./src/plugins");
+export default new CmdRegis("./dist/src/plugins");

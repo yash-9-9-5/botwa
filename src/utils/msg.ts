@@ -5,7 +5,6 @@ import {
   proto,
   extractMessageContent,
   isJidGroup,
-  isJidUser,
 } from "baileys";
 
 const extractText = (message: proto.IMessage | undefined): string => {
@@ -157,7 +156,7 @@ const procMsg = async (
       mentioned: [],
       device: "unknown",
       isBot: false,
-      reply: async (text: string) => {
+      reply: async (_text: string) => {
         return Promise.resolve(null);
       },
     };
@@ -223,7 +222,7 @@ const procMsg = async (
 
     if (quotedMsgId) {
       quotedContent = (Object.entries(dStore.messages) as [string, any[]][])
-        .map(([a, i]) => i.find((b: any) => b.key.id === quotedMsgId))
+        .map(([_, i]) => i.find((b: any) => b.key.id === quotedMsgId))
         .find(
           (item: any) =>
             item && typeof item === "object" && item.key?.id === quotedMsgId,
@@ -260,7 +259,7 @@ const procMsg = async (
         mentioned: [],
         device: "unknown",
         isBot: false,
-        reply: async (text: string) => {
+        reply: async (_text: string) => {
           return Promise.resolve(null);
         },
       };
@@ -308,10 +307,10 @@ const procMsg = async (
     mentioned: allMentions,
     device,
     isBot,
-    reply: async (text: string) => {
+    reply: async (_text: string) => {
       return await socket.sendMessage(
         chatJid,
-        { text },
+        { text: _text },
         {
           quoted: message,
           ephemeralExpiration: isGroup

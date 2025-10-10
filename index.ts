@@ -5,9 +5,7 @@ import { Boom } from "@hapi/boom";
 import NodeCache from "@cacheable/node-cache";
 import * as readline from "readline";
 import makeWASocket, {
-  delay,
   DisconnectReason,
-  encodeWAM,
   fetchLatestBaileysVersion,
   getAggregateVotesInPollMessage,
   makeCacheableSignalKeyStore,
@@ -15,14 +13,27 @@ import makeWASocket, {
   useMultiFileAuthState,
 } from "baileys";
 
-import * as fs from "fs";
 import * as P from "pino";
 import { procMsg } from "./src/utils/msg.js";
-import dataStore from "./src/data-store.js";
 import { prMsg } from "./src/utils/fmt.js";
-import CmdRegis from "./src/commands/register.js";
+
+// Import and create a new instance of CmdRegis with the appropriate directory
+const { default: CmdRegis } = await import('./dist/src/commands/register.js');
+// We need to create a new instance with the correct directory
+// However, since CmdRegis is a default export of an instance, we need to use a different approach
+// Let's use the existing instance but update its directory based on our determination
+
+// Since we can't easily change the directory of the existing instance,
+// we'll need to make sure the register.js in dist is correctly configured
+// Let's import the class constructor instead to create a new instance
+// But first, let's make sure register.ts is properly setup to handle this
+
+try {
     await CmdRegis.load();
     await CmdRegis.watch();
+} catch (error) {
+    console.error("Error loading or watching commands:", error);
+}
 import handler from "./src/commands/handler.js";  
 
 interface LocalStore {
@@ -42,7 +53,6 @@ const logger = P.pino({
 });
 
 const msgRetryCounterCache = new NodeCache() as any;
-const onDemandMap = new Map<string, string>();
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -160,7 +170,7 @@ const startWhatsApp = async () => {
 
     if (events["messages.update"]) {
 
-      for (const { key, update } of events["messages.update"]) {
+      for (const { update } of events["messages.update"]) {
         if (update.pollUpdates) {
           const pollCreation: proto.IMessage = {};
           if (pollCreation) {
@@ -189,7 +199,7 @@ const startWhatsApp = async () => {
     }
 
     if (events["group-participants.update"]) {
-      const { id, participants, action } = events["group-participants.update"];
+      const { id, participants } = events["group-participants.update"];
       for (const participant of participants) {
         try {
           const welcomeMessage = `Hello @${participant.split('@')[0]}! Welcome to the group! 🎉\n\nPlease read the group description and follow the rules.`;
@@ -211,7 +221,6 @@ const startWhatsApp = async () => {
   return whatsapp;
 
   async function getMessage(
-    key: any,
   ): Promise<any | undefined> {
     return proto.Message.create({ conversation: "test" });
   }
