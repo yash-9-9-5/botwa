@@ -7,8 +7,7 @@
 </p>
 
 <p align="center">
-  A powerful and extensible WhatsApp bot built with TypeScript and the Baileys library. This bot allows you to automate interactions on WhatsApp with a modular command system and plugin architecture. Fully compatible with Node.js runtime (no Bun required).
-</p>
+  A powerful and extensible WhatsApp bot built with TypeScript and the Baileys library. This bot allows you to automate interactions on WhatsApp with a modular command system and plugin architecture. Fully compatible with Node.js runtime</p>
 
 <p align="center">
   <a href="https://chat.whatsapp.com/LIxeP0zjxkwIq8uMhiEFbD?mode=wwt">
@@ -118,6 +117,43 @@ The bot supports a plugin system for adding custom commands:
 
 3. The bot automatically detects and loads new commands when the file is saved (thanks to the file watcher).
 
+### Running Code Without Commands (Using Middleware)
+
+The bot also supports middleware functionality that allows you to execute code for every message received, regardless of whether it's a command or not. This is particularly useful for:
+
+- Auto-replying to specific keywords or phrases
+- Logging all messages
+- Tracking user activity
+- Implementing automatic responses based on content
+
+To use middleware functionality:
+
+1. Create a new file in the `src/plugins/` directory (e.g., `auto-reply.ts`)
+2. Use the `midwere` property instead of the `run` property:
+
+   ```typescript
+   import cmd, { type CommandContext } from "../commands/map";
+
+   cmd.add({
+     midwere: async ({ m, sock }: CommandContext) => {
+       // This function runs for every received message
+       const messageText = m.body.toLowerCase();
+       
+       // Example: Auto-reply to messages containing "hello"
+       if (messageText.includes("hello")) {
+         m.reply("Hi there! I received your message.");
+       }
+       
+       // Example: Log all messages to console
+       console.log(`Received message: ${m.body} from ${m.sender}`);
+     }
+   });
+   ```
+
+3. The middleware function will execute for every incoming message, whether it's a command or not
+4. Unlike the `run` property which only executes when the command is specifically called, `midwere` runs on every message
+5. Remember that middleware runs frequently, so optimize your code for performance
+
 ## 🔒 Permissions System
 
 Commands can have different permission levels:
@@ -195,6 +231,12 @@ The bot comes with a default command system. Use `!menu`, `!help`, or `!list` to
 <p>Stay updated with other projects by following our WhatsApp channel:</p>
 
 [![WhatsApp Channel](https://img.shields.io/badge/Subscribe_Channel-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://whatsapp.com/channel/0029VbBnJebLCoWt2piXYb34)
+
+## 🖥️ Hosting Your Bot
+
+<p>Looking for reliable hosting for your WhatsApp bot? Check out <strong>pwcraft cloud</strong> for affordable and stable VPS solutions perfect for running your bot 24/7:</p>
+
+[![pwcraft cloud](https://img.shields.io/badge/pwcraft_cloud-00C4FF?style=for-the-badge&logo=google-cloud&logoColor=white)](https://whatsapp.com/channel/0029Vb6WymkAe5VwnfNMIq0H)
 
 ## 📄 License
 
