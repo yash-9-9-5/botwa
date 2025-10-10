@@ -1,4 +1,4 @@
-import cmd, { type CommandContext } from "../../commands/map";
+import cmd, { type CommandContext } from "../../commands/map.js";
 import os from "os";
 import { performance } from "perf_hooks";
 

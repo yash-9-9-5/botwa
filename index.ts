@@ -17,13 +17,13 @@ import makeWASocket, {
 
 import * as fs from "fs";
 import * as P from "pino";
-import { procMsg } from "./src/utils/msg";
-import dataStore from "./src/data-store";
-import { prMsg } from "./src/utils/fmt";
-import CmdRegis from "./src/commands/register";
+import { procMsg } from "./src/utils/msg.js";
+import dataStore from "./src/data-store.js";
+import { prMsg } from "./src/utils/fmt.js";
+import CmdRegis from "./src/commands/register.js";
     await CmdRegis.load();
     await CmdRegis.watch();
-import handler from "./src/commands/handler";  
+import handler from "./src/commands/handler.js";  
 
 interface LocalStore {
    messages: Record<string, any>;

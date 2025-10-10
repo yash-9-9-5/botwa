@@ -1,9 +1,9 @@
-import cmd, { type CommandContext } from "../../commands/map";
+import cmd, { type CommandContext } from "../../commands/map.js";
 import { join, resolve, dirname } from "path";
 import { readFile, writeFile, readdir, unlink } from "fs/promises";
 import { existsSync } from "fs";
 import { spawn } from "child_process";
-import CmdRegis from "../../commands/register";
+import CmdRegis from "../../commands/register.js";
 
 const PLUGINS_DIR = resolve("./src/plugins/");
 const DIST_DIR = resolve("./dist/plugins/");

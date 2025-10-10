@@ -8,12 +8,13 @@
     "jsx": "react-jsx",
     "allowJs": true,
 
-    // Bundler mode
+    // Bundler mode (for compatibility with import paths)
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "noEmit": false,
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": ".",
+    "types": ["node"],
 
     // Best practices
     "strict": true,

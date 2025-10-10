@@ -1,4 +1,4 @@
-import cmd, { type CommandContext } from "../commands/map";
+import cmd, { type CommandContext } from "../commands/map.js";
 
 cmd.add({
   name: "menu",

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "tsx index.ts",
-    "build": "tsc"
+    "build": "tsc && node scripts/fix-imports.js"
   },
   "devDependencies": {
     "@types/node": "^24.7.0",

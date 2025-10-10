@@ -1,4 +1,4 @@
-import cmd, { type CommandContext } from "../../commands/map";
+import cmd, { type CommandContext } from "../../commands/map.js";
 import { spawn } from "child_process";
 import { tmpdir } from "os";
 import { join } from "path";

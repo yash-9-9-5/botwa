@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import { join, resolve } from "path";
-import cmd from "./map";
+import cmd from "./map.js";
 import chokidar from "chokidar";
 
 class CmdRegis {

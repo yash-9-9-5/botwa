@@ -1,4 +1,4 @@
-import cmd, { type CommandContext } from "../../commands/map";
+import cmd, { type CommandContext } from "../../commands/map.js";
 import util from "util";
 import { exec as execCb } from "child_process";
 const exec = util.promisify(execCb);

@@ -1,6 +1,6 @@
-import cmd, { type Command } from "./map";
-import type { ProcMsg } from "../utils/msg";
-import type { CommandContext } from "./map";
+import cmd, { type Command } from "./map.js";
+import type { ProcMsg } from "../utils/msg.js";
+import type { CommandContext } from "./map.js";
 
 class CommandHandler {
   async handleCommand(
