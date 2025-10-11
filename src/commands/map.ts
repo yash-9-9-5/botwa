@@ -4,6 +4,7 @@ export interface CommandContext {
   m: ProcMsg;
   sock: any;
   store: any;
+  text: string;
   args: string[];
   command: string;
   isCmd: boolean;

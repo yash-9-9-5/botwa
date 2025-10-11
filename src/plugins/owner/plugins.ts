@@ -3,6 +3,7 @@ import { join, resolve, dirname } from "path";
 import { readFile, writeFile, readdir, unlink } from "fs/promises";
 import { existsSync } from "fs";
 import { spawn } from "child_process";
+import util from "util";
 
 const PLUGINS_DIR = resolve("./src/plugins/");
 const DIST_DIR = resolve("./dist/plugins/");
@@ -15,8 +16,8 @@ cmd.add({
   usage: ".plugins (listing) | .plugins --save [path] [code] | .plugins --delete [path]",
   example: ".plugins\n.plugins --save tools/new-tool.ts `console.log('New tool');`\n.plugins --delete tools/new-tool.ts",
   isOwner: true,
-  async run({ m, args }: CommandContext) {
-    if (args.length === 0) {
+  async run({ m, sock, text }: CommandContext) {
+    if (!text) {
       try {
         const getAllTsFiles = async (dir: string, fileList: string[] = []): Promise<string[]> => {
           const files = await readdir(dir);
@@ -47,22 +48,23 @@ cmd.add({
           .map(dirent => dirent.name);
         
         const fileList = tsFiles.map((file, i) => `${i + 1}. ${file}`).join('\n');
-        m.reply(`Plugin files in directory (${tsFiles.length}):\n\n${fileList}\n\nValid directories: ${validSubdirs.join(', ')}\n\nUse .plugins --save [path] [code] to create/save plugins\nUse .plugins --delete [path] to delete plugins`);
+        m.reply(`Plugin files in directory (${tsFiles.length}):\n\n${fileList}\n\nValid directories: ${validSubdirs.join(', ')}\n\nUse .plugins --get [path] to get plugins content\nUse .plugins --save [path] [code] to create/save plugins\nUse .plugins --delete [path] to delete plugins`);
       } catch (error) {
         console.error("Error listing plugins:", error);
         m.reply("Failed to list plugin files.");
       }
       return;
     }
-    if (args[0] === "--save" && args.length >= 3) {
-      const fileName = args[1];
+    if (text.includes("--save".toLowerCase())) {
+      const fileName = text.replace("--save", "")?.trim();
       if (!fileName) {
         return m.reply("File name is required for --save command");
       }
       let typedFileName: string = fileName;
-      const code = args.slice(2).join(" ");
-      if (!typedFileName.endsWith('.ts')) {
-        return m.reply("File must have .ts extension");
+      const code = m?.quoted ? m?.quoted?.text?.trim()  : ''
+      if (!m.quoted && !code) return m.reply("Reply code to save")
+      if (!typedFileName.endsWith('.ts') || !typedFileName.endsWith('.js')) {
+        return m.reply("File must have .ts/.js extension");
       }
 
       if (typedFileName.includes('..')) {
@@ -75,7 +77,7 @@ cmd.add({
       
         const validSubdirs = (await readdir(PLUGINS_DIR, { withFileTypes: true }))
           .filter(dirent => dirent.isDirectory())
-          .map(dirent => dirent.name);
+          .map( dirent => dirent.name);
         
         if (!validSubdirs.includes(subdirectory)) {
           return m.reply(`Invalid subdirectory. Valid subdirectories are: ${validSubdirs.join(', ')}`);
@@ -97,9 +99,12 @@ cmd.add({
         await writeFile(filePath, code || '');
         m.reply(`Plugin ${fileName} saved successfully in the plugins directory.`);
         try {
-          await compilePluginFile(fileName);
-          m.reply(`✅ Plugin ${fileName} compiled successfully!`);
+          if (typedFileName.endsWith('.ts')) {
+            await compilePluginFile(fileName);
+            m.reply(`✅ Plugin ${fileName} compiled successfully!`);
+          }
           m.reply("🔄 Commands reloaded successfully after compilation!");
+          
         } catch (compileError) {
           console.error("Error during compilation:", compileError);
           m.reply(`⚠️ Plugin saved but compilation failed: ${compileError}`);
@@ -111,14 +116,14 @@ cmd.add({
       return;
     }
   
-    if (args[0] === "--delete" && args.length === 2) {
-      const fileName = args[1];
+    if (text.includes("--delete".toLowerCase())) {
+      const fileName = text.replace("--delete", '')?.trim();
       if (!fileName) {
         return m.reply("File name is required for --delete command");
       }
       let typedFileName: string = fileName;
-      if (!typedFileName.endsWith('.ts')) {
-        return m.reply("File must have .ts extension");
+      if (!typedFileName.endsWith('.ts') && !typedFileName.endsWith(".js")) {
+        return m.reply("File must have .ts/.js extension");
       }
 
       if (typedFileName.includes('..')) {
@@ -136,8 +141,8 @@ cmd.add({
         if (!validSubdirs.includes(subdirectory)) {
           return m.reply(`Invalid subdirectory. Valid subdirectories are: ${validSubdirs.join(', ')}`);
         }
-      }
 
+      }
       if (!typedFileName) {
         return m.reply("File name is required for --delete command (internal check)");
       }
@@ -173,8 +178,22 @@ cmd.add({
       }
       return;
     }
+    if (text.includes("--get".toLowerCase())) {
+        const fileName = text.replace("--get", "")?.trim();
+        if (!fileName) return m.reply("Input file .ts/.js to get content");
+        const filePath = join(PLUGINS_DIR, fileName);
+        if (!existsSync(filePath)) return m.reply(`File ${fileName} not found`);
+        const buffer = await readFile(filePath);
+        sock.sendMessage(m.chat, {
+            document: buffer,
+            fileName: fileName.split("/").pop(),
+            mimetype: `application/${fileName.endsWith(".ts") ? 'typescript' : 'javascript'}`,
+            caption: `\`\`\`STDOUT:\n ${buffer.toString("utf-8")}\`\`\``
+        }, { quoted: m });
+        return
+    }
     
-    m.reply("Usage:\n• .plugins - List all plugins\n• .plugins --save [path] [code] - Save/create a plugin\n• .plugins --delete [path] - Delete a plugin");
+    m.reply("Usage:\n• .plugins --get [path] - to get plugins content\n• .plugins - List all plugins\n• .plugins --save [path] [code] - Save/create a plugin\n• .plugins --delete [path] - Delete a plugin");
   },
 });
 
@@ -183,6 +202,7 @@ async function compilePluginFile(fileName: string): Promise<void> {
     try {
       await import('fs').then(({ promises }) => promises.mkdir(DIST_DIR, { recursive: true }));
     } catch (error) {
+    
     }
   }
   

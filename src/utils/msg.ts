@@ -308,14 +308,20 @@ const procMsg = async (
     device,
     isBot,
     reply: async (_text: string) => {
-      return await socket.sendMessage(
-        chatJid,
-        { text: _text },
-        {
-          quoted: message,
-          ephemeralExpiration: isGroup
+      let sock = socket.sendMessage
+      socket.sendMessage = async(jid:string, content:any, options:any): Promise<any> => {
+          return sock(jid, content, {
+            ...options,
+            ephemeralExpiration: isGroup
             ? metadata?.ephemeralDuration
             : (message as { [key: string]: any })[type]?.contextInfo?.expiration,
+          })
+      }
+      return await socket.sendMessage(
+        chatJid,
+         { text: _text },
+        {
+          quoted: message,
         },
       );
     },

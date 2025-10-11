@@ -8,14 +8,17 @@ class CommandHandler {
     socket: any,
     store: any,
   ): Promise<void> {
+   if (process.env.isSelf && processedMessage.sender.split("@")[0] !== process.env.OWNER) return
     const messageText = processedMessage.body.trim() || "";
     const parseResult = this.parseCommand(messageText);
     const commandName = parseResult[0];
     const args = parseResult[1];
+    const text = args.join(" ") || ""
     const context: CommandContext = {
       m: processedMessage,
       sock: socket,
       store: store,
+      text,
       args,
       command: commandName,
       isCmd: this.isCommand(messageText),
@@ -38,7 +41,6 @@ class CommandHandler {
               .includes(commandName.toLowerCase().trim()),
       );
     if (!foundCommand) return;
-    if (process.env.isSelf && processedMessage.sender.split("@")[0] !== process.env.OWNER) return console.log("SELF MODE: ACTIVE")
     try {
       if (foundCommand.run) {
         if (!this.checkPermissions(foundCommand, processedMessage)) {
