@@ -17,16 +17,7 @@ import * as P from "pino";
 import { procMsg } from "./src/utils/msg.js";
 import { prMsg } from "./src/utils/fmt.js";
 
-// Import and create a new instance of CmdRegis with the appropriate directory
-const { default: CmdRegis } = await import('./dist/src/commands/register.js');
-// We need to create a new instance with the correct directory
-// However, since CmdRegis is a default export of an instance, we need to use a different approach
-// Let's use the existing instance but update its directory based on our determination
-
-// Since we can't easily change the directory of the existing instance,
-// we'll need to make sure the register.js in dist is correctly configured
-// Let's import the class constructor instead to create a new instance
-// But first, let's make sure register.ts is properly setup to handle this
+const { default: CmdRegis } = await import('./src/commands/register.js');
 
 try {
     await CmdRegis.load();

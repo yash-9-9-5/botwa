@@ -99,4 +99,4 @@ class CmdRegis {
   }
 }
 
-export default new CmdRegis("./dist/src/plugins");
+export default new CmdRegis("./src/plugins");
