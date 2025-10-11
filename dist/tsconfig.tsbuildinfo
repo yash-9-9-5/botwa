@@ -1,0 +1,1 @@
+{"root":["../index.ts","../src/data-store.ts","../src/commands/handler.ts","../src/commands/map.ts","../src/commands/register.ts","../src/plugins/menu.ts","../src/plugins/tes.ts","../src/plugins/info/ping.ts","../src/plugins/owner/eval.ts","../src/plugins/owner/plugins.ts","../src/plugins/tools/tovn.ts","../src/utils/fmt.ts","../src/utils/msg.ts"],"version":"5.9.3"}
