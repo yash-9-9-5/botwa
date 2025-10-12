@@ -20,8 +20,7 @@ import makeWASocket from './src/utils/socket.js';
 import * as P from "pino";
 import { procMsg } from "./src/utils/msg.js";
 import { prMsg } from "./src/utils/fmt.js";
-
-const { default: CmdRegis } = await import('./src/commands/register.js');
+import CmdRegis from "./src/commands/register.js";
 
 try {
     await CmdRegis.load();
