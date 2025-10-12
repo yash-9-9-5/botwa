@@ -131,7 +131,7 @@ const procMsg = async (
 ): Promise<ProcMsg> => {
   const message = filterMsgs(originalMessage);
   const { key, message: rawMessage } = message || originalMessage;
-  console.log(key);
+  console.log(originalMessage);
   if (!rawMessage) {
     return {
       key: { id: "", remoteJid: "", fromMe: false } as proto.IMessageKey,
@@ -163,7 +163,7 @@ const procMsg = async (
   }
   const id = key?.id || "";
   const chatJid = key?.remoteJid || "";
-  const fromMe = key?.fromMe || false;
+  const Me = key?.fromMe || false;
   const isGroup = isJidGroup(chatJid) || chatJid?.endsWith("@g.us");
   const timestamp = message.messageTimestamp;
   const rawPushName = (message as any).pushName;
@@ -267,7 +267,8 @@ const procMsg = async (
   }
 
   const device = id ? getDeviceType(id) : "unknown";
-  const isBot = fromMe;
+  const isFromMe = key?.fromMe || false;
+  const isBot = isFromMe;
 
   const normalizedTimestamp = timestamp
     ? typeof timestamp === "number"
@@ -279,7 +280,7 @@ const procMsg = async (
     key: key!,
     id,
     chat: chatJid,
-    fromMe,
+    fromMe: isFromMe,
     isGroup,
     sender,
     senderName: pushName,
@@ -308,15 +309,6 @@ const procMsg = async (
     device,
     isBot,
     reply: async (_text: string) => {
-      let sock = socket.sendMessage
-      socket.sendMessage = async(jid:string, content:any, options:any): Promise<any> => {
-          return sock(jid, content, {
-            ...options,
-            ephemeralExpiration: isGroup
-            ? metadata?.ephemeralDuration
-            : (message as { [key: string]: any })[type]?.contextInfo?.expiration,
-          })
-      }
       return await socket.sendMessage(
         chatJid,
          { text: _text },

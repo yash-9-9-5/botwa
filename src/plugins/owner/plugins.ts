@@ -63,9 +63,6 @@ cmd.add({
       let typedFileName: string = fileName;
       const code = m?.quoted ? m?.quoted?.text?.trim()  : ''
       if (!m.quoted && !code) return m.reply("Reply code to save")
-      if (!typedFileName.endsWith('.ts') || !typedFileName.endsWith('.js')) {
-        return m.reply("File must have .ts/.js extension");
-      }
 
       if (typedFileName.includes('..')) {
         return m.reply("Invalid path. '..' is not allowed.");
@@ -122,10 +119,6 @@ cmd.add({
         return m.reply("File name is required for --delete command");
       }
       let typedFileName: string = fileName;
-      if (!typedFileName.endsWith('.ts') && !typedFileName.endsWith(".js")) {
-        return m.reply("File must have .ts/.js extension");
-      }
-
       if (typedFileName.includes('..')) {
         return m.reply("Invalid path. '..' is not allowed.");
       }

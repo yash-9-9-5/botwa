@@ -1,32 +1,24 @@
 {
   "compilerOptions": {
-    // Environment setup & latest features
-    "lib": ["ES2022"],
     "target": "ES2022",
     "module": "ES2022",
-    "moduleDetection": "force",
-    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "lib": ["ES2022"],
     "allowJs": true,
-
-    // Bundler mode (for compatibility with import paths)
-    "moduleResolution": "bundler",
-    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false,
     "noEmit": false,
     "outDir": "./dist",
     "rootDir": ".",
-    "types": ["node"],
-
-    // Best practices
-    "strict": true,
-    "skipLibCheck": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-
-    // Some stricter flags (disabled by default)
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
+    "types": ["node"]
   },
   "include": [
     "index.ts",
